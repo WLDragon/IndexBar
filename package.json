@@ -1,0 +1,23 @@
+{
+  "name": "indexbar",
+  "version": "0.1.0",
+  "description": "an IndexBar for HTML",
+  "main": "IndexBar.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WLDragon/IndexBar.git"
+  },
+  "keywords": [
+    "indexbar",
+    "js"
+  ],
+  "author": "WLDragon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WLDragon/IndexBar/issues"
+  },
+  "homepage": "https://github.com/WLDragon/IndexBar#readme"
+}

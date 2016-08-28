@@ -18,25 +18,41 @@
 
     //默认配置
     var defaultConfig = {
-        
+        keys: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        activeColor: '#39f',
+        direction: 'left', //TODO
+        color: '#000',
+        maxScale: 4,
+        offset: 8,
     }
 
     /**
-     * config.id {string} ul标签的ID
+     * config.container {string} 目标容器的选择器描述符，必填
+     * config.keys {string|array} 显示的索引字符，默认ABCDEFGHIJKLMNOPQRSTUVWXYZ
      * config.maxScale {number} 目标字符的最大缩放比例，默认为4
      * config.offset {number} 字母偏移系数，默认为8
      * config.direction {string} left|right|top|down 字母突出方向，默认left
      * config.color {string} 字体颜色，默认#000
-     * config.targetColor {string} 目标字符的字体颜色，默认#39f
+     * config.activeColor {string} 目标字符的字体颜色，默认#39f
      */
     function IndexBar(config) {
         var self = this;
-        var ul = document.getElementById(config.id);
-        ul.className = ul.className == '' ? 'index-bar-container' : (ul.className + ' index-bar-container');
-        var ulHeight = ul.clientHeight;
-        var keys = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        var container = document.querySelector(config.container);
+        //设置配置
+        var cfg = {};
+        for(var k in defaultConfig) {
+            cfg[k] = config[k] || defaultConfig[k];
+        }
+        self.config = cfg;
+
+        //添加Dom到指定容器
+        var barHeight = container.clientHeight;
+        var ul = document.createElement('ul');
+        ul.className = 'index-bar-container';
+
+        var keys = (typeof cfg.keys === 'string') ? cfg.keys.split('') : cfg.keys;
         var length = self.length = keys.length;
-        var liHeight = self.liHeight = ~~(ulHeight / length);
+        var liHeight = self.liHeight = ~~(barHeight / length);
         var fontSize = ~~(liHeight * .6);
 
         var liHtml = '';
@@ -45,8 +61,12 @@
         }
         ul.innerHTML = liHtml;
         self.children = ul.children;
+        container.appendChild(ul);
         
         //移动浏览器的Touch事件
+        ul.addEventListener('touchstart', function (e) {
+            self.play(e.touches[0].pageY);
+        });
         ul.addEventListener('touchmove', function (e) {
             self.play(e.touches[0].pageY);
         });
@@ -69,32 +89,42 @@
     prototype.play = function(y) {
         var liHeight = this.liHeight;
         var index = ~~(y / liHeight);
+
+        var children = this.children;
+
+        var config = this.config;
+        var color = config.color;
+        var offset = config.offset;
+        var maxScale = config.maxScale;
+        var activeColor = config.activeColor;
         for (var i = this.length - 1; i >= 0; i--) {
-            var li = this.children[i];
+            var li = children[i];
             var style = li.style;
             var diff = index - i;
             if (diff > -4 && diff < 4) {
                 li._isPlayed = true;
                 var distance = Math.abs(((i + .5) * liHeight) - y);
-                var scale = 4 - 3 * distance / (3.5 * liHeight);
-                style.color = diff == 0 ? '#39f' : '#000';
-                style.transform = 'scale(' + scale + ',' + scale + ') translateX(' + (-8 * scale) + 'px)';
+                var scale = maxScale - 3 * distance / (3.5 * liHeight);
+                style.color = diff == 0 ? activeColor : color;
+                style.transform = 'scale(' + scale + ',' + scale + ') translateX(' + (-offset * scale) + 'px)';
             } else if (li._isPlayed) {
                 li._isPlayed = false;
-                style.color = '#000';
+                style.color = color;
                 style.transform = 'scale(1,1) translateX(0px)';
             }
         }
     }
 
     prototype.stop = function() {
+        var color = this.config.color;
+        var children = this.children;
         for (var i = this.length - 1; i >= 0; i--) {
-            var li = this.children[i];
+            var li = children[i];
             if (li._isPlayed) {
                 li._isPlayed = false;
                 var style = li.style;
+                style.color = color;
                 style.transform = 'scale(1,1) translateX(0px)';
-                style.color = '#000';
             }
         }
     }
