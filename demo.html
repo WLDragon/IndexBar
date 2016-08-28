@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <style>
+        html, body { height: 100%; margin: 0; }
+        .bar-fixed { position: fixed; width: 25%; height: 100%; right: 0; }
+    </style>
+    <script src="IndexBar.js"></script>
+</head>
+
+<body>
+    <div class="bar-fixed">
+        <ul id="indexBar"></ul>
+    </div>
+    <script>
+        new IndexBar({
+            id: 'indexBar'
+        });
+    </script>
+</body>
+
+</html>
