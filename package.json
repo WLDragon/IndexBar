@@ -6,6 +6,11 @@
   "scripts": {
     "build": "node build.js"
   },
+  "files": [
+    "src/IndexBar.js",
+    "dist/IndexBar.min.js",
+    "dist/demo.html"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WLDragon/IndexBar.git"
