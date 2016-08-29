@@ -8,6 +8,8 @@
         typeof define === 'function' && define.amd ? define(factory) :
             (global.IndexBar = factory());
 } (this, function () {
+    "use strict";
+
     //创建样式
     var styleDom = document.createElement('style');
     var styleNode = '.index-bar-container { list-style-type: none; height: 100%; width: 100%; padding: 0; margin: 0; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }'
@@ -35,14 +37,14 @@
      * config.color {string} 字体颜色，默认#000
      * config.activeColor {string} 目标字符的字体颜色，默认#39f
      */
-    function IndexBar(config) {
+    function IndexBar(options) {
         var self = this;
-        self.callback = config.callback;
-        var container = document.querySelector(config.container);
+        self.callback = options.callback;
+        var container = document.querySelector(options.container);
         //设置配置
         var cfg = {};
         for(var k in defaultConfig) {
-            cfg[k] = config[k] || defaultConfig[k];
+            cfg[k] = options[k] || defaultConfig[k];
         }
         self.config = cfg;
 
@@ -66,6 +68,7 @@
         
         //移动浏览器的Touch事件
         ul.addEventListener('touchstart', function (e) {
+            e.preventDefault(); //防止微信下拉
             self.play(e.touches[0].pageY);
         });
         ul.addEventListener('touchmove', function (e) {
