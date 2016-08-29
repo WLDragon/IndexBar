@@ -1,6 +1,6 @@
 {
   "name": "indexbar",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "an IndexBar for HTML",
   "main": "IndexBar.js",
   "scripts": {
