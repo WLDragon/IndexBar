@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <style>
+        html, body {
+            font-family: Arial;
+            height: 100%;
+            margin: 0;
+        }
+        .bar-fixed {
+            border-left: 1px solid #ccc;
+            background-color: #eee;
+            position: fixed;
+            height: 100%;
+            width: 15%;
+            right: 0;
+        }
+        #show {
+            background-color: #eee;
+            border-radius: 10px;
+            line-height: 100px;
+            text-align: center;
+            position: absolute;
+            margin-top: -50px;
+            margin-left: 20%;
+            font-size: 60px;
+            width: 25%;
+            top: 50%;
+        }
+    </style>
+    <script src="IndexBar.min.js"></script>
+</head>
+
+<body>
+    <div class="bar-fixed"></div>
+    <div id="show"></div>
+    <script>
+        var show = document.getElementById('show');
+        new IndexBar({
+            container: '.bar-fixed',
+            callback: function(key) {
+                show.innerText = key;
+            }
+        });
+    </script>
+</body>
+
+</html>
