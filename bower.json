@@ -1,0 +1,21 @@
+{
+  "name": "indexbar",
+  "description": "an IndexBar for HTML",
+  "main": "IndexBar.js",
+  "authors": [
+    "WLDragon"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "indexbar",
+    "js"
+  ],
+  "homepage": "https://github.com/WLDragon/IndexBar",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
